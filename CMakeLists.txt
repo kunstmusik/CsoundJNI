@@ -13,11 +13,11 @@ include(UseJava)
 
 include_directories(${JNI_INCLUDE_DIRS} ${CSOUND_INCLUDE_DIR})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(SOURCE_FILES src/CsoundJNI.cpp)
+set(SOURCE_FILES src/main/cpp/CsoundJNI.cpp)
 
-set(JAVA_SOURCE_FILES src/CsoundJNI.java)
+set(JAVA_SOURCE_FILES src/main/java/com/kunstmusik/csoundjni/CsoundJNI.java)
 
-add_jar(JCsound SOURCES ${JAVA_SOURCE_FILES}
+add_jar(CsoundJNI SOURCES ${JAVA_SOURCE_FILES}
   GENERATE_NATIVE_HEADERS csoundjni-native-headers)
 
 add_library(csoundjni-native SHARED ${SOURCE_FILES})
