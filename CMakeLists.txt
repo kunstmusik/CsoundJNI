@@ -17,9 +17,10 @@ set(SOURCE_FILES src/JCsound.cpp)
 
 set(JAVA_SOURCE_FILES src/JCsound.java)
 
-add_jar(JCsound ${JAVA_SOURCE_FILES})
+add_jar(JCsound SOURCES ${JAVA_SOURCE_FILES}
+  GENERATE_NATIVE_HEADERS jcsound-native-headers)
 
 add_library(jcsound-native SHARED ${SOURCE_FILES})
 set_target_properties(jcsound-native PROPERTIES 
             OUTPUT_NAME jcsound)
-target_link_libraries(jcsound-native ${CSOUND_LIBRARY})
+          target_link_libraries(jcsound-native PRIVATE ${CSOUND_LIBRARY} jcsound-native-headers)
