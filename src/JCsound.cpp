@@ -33,6 +33,8 @@ JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGetVersion
 JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundSetOption
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring option) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(option == NULL) return 0;
+
   const char *nativeString = env->GetStringUTFChars(option, 0);
 
   jint retVal = csoundSetOption(csound, nativeString);
@@ -51,6 +53,8 @@ JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundEvalCode
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring code) {
 
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(code == NULL) return 0;
+
   const char *nativeString = env->GetStringUTFChars(code, 0);
 
   jint retVal = csoundEvalCode(csound, nativeString);
@@ -69,6 +73,7 @@ JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompile
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jobjectArray args) {
   const char *argv[256]; //up to 256 commandline args...
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(args == NULL) return 0;
   int argc = env->GetArrayLength(args);
 
   for(int i = 0; i < argc; i++) {
@@ -95,6 +100,7 @@ JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompile
 JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompileOrc
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring orcCode) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(orcCode == NULL) return 0;
 
   const char *nativeString = env->GetStringUTFChars(orcCode, 0);
 
@@ -113,6 +119,7 @@ JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompileOrc
 JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompileOrcAsync
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring orcCode) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(orcCode == NULL) return 0;
 
   const char *nativeString = env->GetStringUTFChars(orcCode, 0);
 
@@ -131,6 +138,7 @@ JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompileOrcAsync
 JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompileCsdText
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring csdText) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(csdText == NULL) return 0;
 
   const char *nativeString = env->GetStringUTFChars(csdText, 0);
 
@@ -161,6 +169,7 @@ JNIEXPORT jdouble JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGetScoreTime
 JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundInputMessage
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring scoreMessage) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(scoreMessage == NULL) return;
 
   const char *nativeString = env->GetStringUTFChars(scoreMessage, 0);
 
@@ -177,6 +186,7 @@ JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundInputMessage
 JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundInputMessageAsync
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring scoreMessage) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(scoreMessage == NULL) return;
 
   const char *nativeString = env->GetStringUTFChars(scoreMessage, 0);
 
@@ -193,6 +203,7 @@ JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundInputMessageAsy
 JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundReadScore
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring message) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(message == NULL) return 0;
 
   const char *nativeString = env->GetStringUTFChars(message, 0);
 
@@ -212,6 +223,7 @@ JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundReadScore
 JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundReadScoreAsync
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring message) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(message == NULL) return;
 
   const char *nativeString = env->GetStringUTFChars(message, 0);
 
@@ -367,6 +379,8 @@ JNIEXPORT jdouble JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGet0dBFS
 JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundSetControlChannel
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring channel, jdouble value) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(channel == NULL) return;
+
   const char *nativeString = env->GetStringUTFChars(channel, 0);
 
   csoundSetControlChannel(csound, nativeString, value);
@@ -381,6 +395,8 @@ JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundSetControlChann
 JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundSetStringChannel
 (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring channel, jstring value) {
   CSOUND* csound = (CSOUND*)csoundPtr;
+  if(channel == NULL || value == NULL) return;
+
   const char *chanName = env->GetStringUTFChars(channel, 0);
   const char *chanValue = env->GetStringUTFChars(value, 0);
 
