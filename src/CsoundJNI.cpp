@@ -1,27 +1,27 @@
 /*
-    JCsound.cpp:
+    CsoundJNI.cpp:
 
     Copyright (C) 2020 Steven Yi 
 
-    This file is part of jcsound.
+    This file is part of CsoundJNI.
 
-    The jcsound Library is free software; you can redistribute it
+    The CsoundJNI Library is free software; you can redistribute it
     and/or modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
     version 2.1 of the License, or (at your option) any later version.
 
-    jcsound is distributed in the hope that it will be useful,
+    CsoundJNI is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public
-    License along with jcsound; if not, write to the Free Software
+    License along with CsoundJNI; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     02110-1301 USA
 */
 
-#include "com_kunstmusik_jcsound_JCsound.h" 
+#include "com_kunstmusik_csoundjni_CsoundJNI.h" 
 #include "csound.h"
 
 #include <iostream>
@@ -32,53 +32,53 @@ extern "C"
 #endif
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundInitialize
    * Signature: (I)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundInitialize
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundInitialize
     (JNIEnv *env, jclass clazz, jint flags) {
       jint retVal = csoundInitialize(flags); 
       return retVal;
     }
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundCreate
    * Signature: (I)J
    */
-  JNIEXPORT jlong JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCreate
+  JNIEXPORT jlong JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundCreate
     (JNIEnv *env, jclass clazz) {
       CSOUND* csound = csoundCreate(NULL); 
       return (jlong)csound;
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundDestroy
    * Signature: (J)V
    */
-  JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundDestroy
+  JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundDestroy
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       csoundDestroy(csound);
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGetVersion
    * Signature: (J)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGetVersion
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetVersion
     (JNIEnv *env, jclass clazz) {
       return csoundGetVersion();
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundSetOption
    * Signature: (JLjava/lang/String;)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundSetOption
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetOption
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring option) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(option == NULL) return 0;
@@ -93,11 +93,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundEvalCode
    * Signature: (JLjava/lang/String;)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundEvalCode
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundEvalCode
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring code) {
 
       CSOUND* csound = (CSOUND*)csoundPtr;
@@ -113,11 +113,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundCompile
    * Signature: (J[Ljava/lang/String;)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompile
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundCompile
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jobjectArray args) {
       const char *argv[256]; //up to 256 commandline args...
       CSOUND* csound = (CSOUND*)csoundPtr;
@@ -141,11 +141,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundCompileOrc
    * Signature: (JLjava/lang/String;)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompileOrc
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundCompileOrc
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring orcCode) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(orcCode == NULL) return 0;
@@ -160,11 +160,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundCompileOrcAsync
    * Signature: (JLjava/lang/String;)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompileOrcAsync
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundCompileOrcAsync
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring orcCode) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(orcCode == NULL) return 0;
@@ -179,11 +179,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundCompileCsdText
    * Signature: (JLjava/lang/String;)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCompileCsdText
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundCompileCsdText
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring csdText) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(csdText == NULL) return 0;
@@ -198,11 +198,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGetScoreTime
    * Signature: (J)D
    */
-  JNIEXPORT jdouble JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGetScoreTime
+  JNIEXPORT jdouble JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetScoreTime
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -210,11 +210,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundInputMessage
    * Signature: (JLjava/lang/String;)I
    */
-  JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundInputMessage
+  JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundInputMessage
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring scoreMessage) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(scoreMessage == NULL) return;
@@ -227,11 +227,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundInputMessageAsync
    * Signature: (JLjava/lang/String;)I
    */
-  JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundInputMessageAsync
+  JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundInputMessageAsync
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring scoreMessage) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(scoreMessage == NULL) return;
@@ -244,11 +244,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundReadScore
    * Signature: (JLjava/lang/String;)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundReadScore
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundReadScore
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring message) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(message == NULL) return 0;
@@ -264,11 +264,11 @@ extern "C"
 
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundReadScoreAsync
    * Signature: (JLjava/lang/String;)I
    */
-  JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundReadScoreAsync
+  JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundReadScoreAsync
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring message) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(message == NULL) return;
@@ -281,11 +281,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundStart
    * Signature: (J)V
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundStart
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundStart
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -294,11 +294,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundStop
    * Signature: (J)V
    */
-  JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundStop
+  JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundStop
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -306,11 +306,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundPerformKsmps
    * Signature: (J)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundPerformKsmps
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundPerformKsmps
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -319,11 +319,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundCleanup
    * Signature: (J)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCleanup
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundCleanup
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -332,21 +332,21 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundReset
    * Signature: (J)V
    */
-  JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundReset
+  JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundReset
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       csoundReset((CSOUND*)csoundPtr);
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGetSr
    * Signature: (J)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGetSr
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSr
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -355,11 +355,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGetKr
    * Signature: (J)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGetKr
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetKr
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -368,11 +368,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGetKsmps
    * Signature: (J)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGetKsmps
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetKsmps
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -381,11 +381,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGetNchnls
    * Signature: (J)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGetNchnls
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetNchnls
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -394,11 +394,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGetNchnlsInput
    * Signature: (J)I
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGetNchnlsInput
+  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetNchnlsInput
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -407,11 +407,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGet0dBFS
    * Signature: (J)D
    */
-  JNIEXPORT jdouble JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundGet0dBFS
+  JNIEXPORT jdouble JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGet0dBFS
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
@@ -420,11 +420,11 @@ extern "C"
     }
 
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundSetControlChannel
    * Signature: (JLjava/lang/String;D)V
    */
-  JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundSetControlChannel
+  JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetControlChannel
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring channel, jdouble value) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(channel == NULL) return;
@@ -436,11 +436,11 @@ extern "C"
       env->ReleaseStringUTFChars(channel, nativeString);
     }
   /*
-   * Class:     com_kunstmusik_jcsound_JCsound
+   * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundSetStringChannel
    * Signature: (JLjava/lang/String;Ljava/lang/String;)V
    */
-  JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundSetStringChannel
+  JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetStringChannel
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring channel, jstring value) {
       CSOUND* csound = (CSOUND*)csoundPtr;
       if(channel == NULL || value == NULL) return;

@@ -1,35 +1,35 @@
 /*
-    JCsound.java:
+    CsoundJNI.java:
 
     Copyright (C) 2020 Steven Yi 
 
-    This file is part of jcsound.
+    This file is part of CsoundJNI.
 
-    The jcsound Library is free software; you can redistribute it
+    The CsoundJNI Library is free software; you can redistribute it
     and/or modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
     version 2.1 of the License, or (at your option) any later version.
 
-    jcsound is distributed in the hope that it will be useful,
+    CsoundJNI is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public
-    License along with jcsound; if not, write to the Free Software
+    License along with CsoundJNI; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     02110-1301 USA
 */
 
-package com.kunstmusik.jcsound;
+package com.kunstmusik.csoundjni;
 
-public class JCsound {
+public class CsoundJNI {
 
   public static int CSOUNDINIT_NO_SIGNAL_HANDLER = 1;
   public static int CSOUNDINIT_NO_ATEXIT = 2;
 
   static {
-    System.loadLibrary("jcsound");
+    System.loadLibrary("CsoundJNI");
   }
 
   public static native int csoundInitialize(int flags);

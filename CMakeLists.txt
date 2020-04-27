@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(jcsound)
+project(csoundjni)
 
 set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -13,14 +13,14 @@ include(UseJava)
 
 include_directories(${JNI_INCLUDE_DIRS} ${CSOUND_INCLUDE_DIR})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(SOURCE_FILES src/JCsound.cpp)
+set(SOURCE_FILES src/CsoundJNI.cpp)
 
-set(JAVA_SOURCE_FILES src/JCsound.java)
+set(JAVA_SOURCE_FILES src/CsoundJNI.java)
 
 add_jar(JCsound SOURCES ${JAVA_SOURCE_FILES}
-  GENERATE_NATIVE_HEADERS jcsound-native-headers)
+  GENERATE_NATIVE_HEADERS csoundjni-native-headers)
 
-add_library(jcsound-native SHARED ${SOURCE_FILES})
-set_target_properties(jcsound-native PROPERTIES 
-            OUTPUT_NAME jcsound)
-          target_link_libraries(jcsound-native PRIVATE ${CSOUND_LIBRARY} jcsound-native-headers)
+add_library(csoundjni-native SHARED ${SOURCE_FILES})
+set_target_properties(csoundjni-native PROPERTIES 
+            OUTPUT_NAME csoundjni)
+          target_link_libraries(csoundjni-native PRIVATE ${CSOUND_LIBRARY} csoundjni-native-headers)
