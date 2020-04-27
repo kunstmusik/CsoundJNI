@@ -28,6 +28,16 @@
 
 /*
  * Class:     com_kunstmusik_jcsound_JCsound
+ * Method:    csoundInitialize
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundInitialize
+(JNIEnv *env, jclass clazz, jint flags) {
+  jint retVal = csoundInitialize(flags); 
+  return retVal;
+}
+/*
+ * Class:     com_kunstmusik_jcsound_JCsound
  * Method:    csoundCreate
  * Signature: (I)J
  */
