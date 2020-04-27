@@ -14,6 +14,16 @@ JNIEXPORT jlong JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundCreate
   return (jlong)csound;
 }
 
+/*
+ * Class:     com_kunstmusik_jcsound_JCsound
+ * Method:    csoundDestroy
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_com_kunstmusik_jcsound_JCsound_csoundDestroy
+(JNIEnv *env, jclass clazz, jlong csoundPtr) {
+  CSOUND* csound = (CSOUND*)csoundPtr;
+  csoundDestroy(csound);
+}
 
 /*
  * Class:     com_kunstmusik_jcsound_JCsound

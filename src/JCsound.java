@@ -6,6 +6,7 @@ public class JCsound {
     }
 
     public static native long csoundCreate();
+    public static native void csoundDestroy(long csoundPtr);
     public static native int csoundGetVersion(); 
     public static native int csoundSetOption(long csoundPtr, String option);
 
