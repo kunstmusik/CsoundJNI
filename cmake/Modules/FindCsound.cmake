@@ -21,7 +21,7 @@ endif()
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set CSOUND_FOUND to TRUE
 # if all listed variables are TRUE
-find_package_handle_standard_args(CSOUND
+find_package_handle_standard_args(Csound
                                   CSOUND_LIBRARY CSOUND_INCLUDE_DIR)
 mark_as_advanced(CSOUND_INCLUDE_DIR CSOUND_LIBRARY)
 
