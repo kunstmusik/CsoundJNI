@@ -27,3 +27,8 @@ add_library(csoundjni-native SHARED ${SOURCE_FILES})
 set_target_properties(csoundjni-native PROPERTIES OUTPUT_NAME csoundjni)
 target_link_libraries(csoundjni-native PRIVATE ${CSOUND_LIBRARY})
 install(TARGETS csoundjni-native DESTINATION ${NATIVE_INSTALL_PATH})
+
+if(APPLE)
+  set_target_properties(csoundjni-native PROPERTIES
+    PREFIX "lib" SUFFIX ".jnilib")
+endif()

@@ -10,5 +10,5 @@ package com.kunstmusik.csoundjni;
  * @author syyigmmbp
  */
 public interface MessageCallback {
-    
+    public void callback(int attr, String msg);
 }

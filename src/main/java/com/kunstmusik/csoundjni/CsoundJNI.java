@@ -23,13 +23,35 @@
 
 package com.kunstmusik.csoundjni;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class CsoundJNI {
 
+  private static boolean CSOUND_AVAILABLE = false;
+    
   public static int CSOUNDINIT_NO_SIGNAL_HANDLER = 1;
   public static int CSOUNDINIT_NO_ATEXIT = 2;
 
   static {
-    System.loadLibrary("CsoundJNI");
+    String os = System.getProperty("os.name").toLowerCase();
+    String libraryName = "libcsoundjni.so"; // default case
+    
+    if(os.contains("mac")) {
+        libraryName = "libcsoundjni.jnilib";
+    } else if(os.contains("win")) {
+        libraryName = "csoundjni.dll";
+    }
+    
+      try {
+          NativeUtils.loadLibraryFromJar("/com/kunstmusik/csoundjni/native/" + libraryName);
+          //System.loadLibrary("CsoundJNI");
+          CSOUND_AVAILABLE = true;
+      } catch (IOException ex) {
+          Logger.getLogger(CsoundJNI.class.getName()).log(Level.SEVERE, "Error: " + ex.getMessage(), ex);
+          CSOUND_AVAILABLE = false;
+      }
   }
 
   public static native int csoundInitialize(int flags);
