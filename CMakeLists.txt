@@ -14,7 +14,8 @@ include(UseJava)
 
 include_directories(${JNI_INCLUDE_DIRS} ${CSOUND_INCLUDE_DIR})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(SOURCE_FILES src/main/cpp/CsoundJNI.cpp)
+set(SOURCE_FILES src/main/cpp/CsoundJNI.cpp
+  src/main/cpp/com_kunstmusik_csoundjni_CsoundJNI.h)
 
 #set(JAVA_SOURCE_FILES 
 #  src/main/java/com/kunstmusik/csoundjni/CsoundJNI.java

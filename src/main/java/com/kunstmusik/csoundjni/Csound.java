@@ -31,6 +31,7 @@ import static com.kunstmusik.csoundjni.CsoundJNI.*;
 public class Csound {
 
     private long csoundPtr;
+    private MessageCallback messageCallback;
 
     public Csound() {
         csoundPtr = csoundCreate();
@@ -169,6 +170,13 @@ public class Csound {
         csoundSetStringChannel(csoundPtr, channelName, channelValue);
     }
 
+    public void setMessageCallback(MessageCallback msgCallback) {
+        this.messageCallback = msgCallback;
+        csoundSetMessageCallback(csoundPtr, msgCallback);
+    }
+    
+    
+    
 //    public void getChannelPtr(Pointer p, String name, int type) {
 //        csoundGetChannelPtr(csoundPtr, p, name, type);
 //    }

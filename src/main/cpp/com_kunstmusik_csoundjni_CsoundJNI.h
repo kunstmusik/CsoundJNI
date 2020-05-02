@@ -231,6 +231,14 @@ JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetControlC
 JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetStringChannel
   (JNIEnv *, jclass, jlong, jstring, jstring);
 
+/*
+ * Class:     com_kunstmusik_csoundjni_CsoundJNI
+ * Method:    csoundSetMessageCallback
+ * Signature: (JLcom/kunstmusik/csoundjni/MessageCallback;)V
+ */
+JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetMessageCallback
+  (JNIEnv *, jclass, jlong, jobject);
+
 #ifdef __cplusplus
 }
 #endif

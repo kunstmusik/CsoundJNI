@@ -26,10 +26,61 @@
 
 #include <iostream>
 
+struct HostData {
+  jobject msgCallback;
+  jmethodID callbackMethodId;
+};
+
+JavaVM* g_VM;
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
+    JNIEnv* env;
+    g_VM = vm;
+    if (vm->GetEnv((void**)&env, JNI_VERSION_1_6) != JNI_OK) {
+        return JNI_ERR; // JNI version not supported.
+    }
+  
+    return  JNI_VERSION_1_6;
+}
+
+void jniMessageStringCallback(CSOUND * csound, int attr, const char * msg) {
+  if(csound == NULL) return;
+  HostData* hostData = (HostData*)csoundGetHostData(csound);
+  
+  if(hostData == NULL) return;
+  jobject msgcallback = hostData->msgCallback;
+  
+  JNIEnv *env;
+  // double check it's all ok
+  int getEnvStat = g_VM->GetEnv((void **)&env, JNI_VERSION_1_6);
+//  if (getEnvStat == JNI_EDETACHED) {
+//      std::cout << "GetEnv: not attached" << std::endl;
+//      if (g_VM->AttachCurrentThread((void **) &env, NULL) != 0) {
+//          std::cout << "Failed to attach" << std::endl;
+//      }
+//  } else if (getEnvStat == JNI_OK) {
+//      //
+//  } else if (getEnvStat == JNI_EVERSION) {
+//      std::cout << "GetEnv: version not supported" << std::endl;
+//  }
+
+  jstring string = env->NewStringUTF(msg);
+  env->CallVoidMethod(hostData->msgCallback, hostData->callbackMethodId, (jint)attr, string);
+  env->DeleteLocalRef(string);
+  
+  if (env->ExceptionCheck()) {
+      env->ExceptionDescribe();
+  }
+
+//  g_VM->DetachCurrentThread();
+  
+}
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+
 
   /*
    * Class:     com_kunstmusik_csoundjni_CsoundJNI
@@ -48,7 +99,7 @@ extern "C"
    */
   JNIEXPORT jlong JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundCreate
     (JNIEnv *env, jclass clazz) {
-      CSOUND* csound = csoundCreate(NULL); 
+      CSOUND* csound = csoundCreate(new HostData());
       return (jlong)csound;
     }
 
@@ -60,6 +111,15 @@ extern "C"
   JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundDestroy
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
+      HostData* hostData = (HostData*) csoundGetHostData(csound);
+      
+      if(hostData != NULL) {
+        if(hostData->msgCallback != NULL) {
+          env->DeleteGlobalRef(hostData->msgCallback);
+        }
+        delete hostData;
+      }
+      
       csoundDestroy(csound);
     }
 
@@ -453,6 +513,32 @@ extern "C"
       env->ReleaseStringUTFChars(channel, chanName);
       env->ReleaseStringUTFChars(value, chanValue);
     }
+
+
+
+
+/*
+ * Class:     com_kunstmusik_csoundjni_CsoundJNI
+ * Method:    setMessageCallbackNative
+ * Signature: (Lcom/kunstmusik/csoundjni/MessageCallback;)V
+ */
+JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetMessageCallback
+  (JNIEnv * env, jclass clazz, jlong csoundPtr, jobject jobj) {
+    CSOUND* csound = (CSOUND*)csoundPtr;
+    
+    HostData* data = (HostData*)csoundGetHostData(csound);
+    
+    data->msgCallback = env->NewGlobalRef(jobj);
+    
+    jclass cls = env->GetObjectClass(jobj);
+    
+
+    data->callbackMethodId = env->GetMethodID(cls,
+                                              "callback",
+                                              "(ILjava/lang/String;)V");
+        
+    csoundSetMessageStringCallback(csound, &jniMessageStringCallback);
+  }
 
 #ifdef __cplusplus
 }

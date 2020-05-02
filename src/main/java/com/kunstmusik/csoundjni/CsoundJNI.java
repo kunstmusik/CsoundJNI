@@ -126,6 +126,8 @@ public class CsoundJNI {
 
   public static native void csoundSetStringChannel(long csoundPtr, String channelName, String channelValue);
 
+  public static native void csoundSetMessageCallback(long csoundPtr, MessageCallback msgCallback);
+  
   //public void getChannelPtr(Pointer p, String name, int type) {
   //csoundGetChannelPtr(csoundPtr, p, name, type);
   //}
