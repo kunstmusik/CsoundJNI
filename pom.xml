@@ -10,6 +10,15 @@
 
   <name>CsoundJNI</name>
   <url>http://github.com/kunstmusik/csoundjni</url>
+    
+  <packaging>jar</packaging>
+
+  <scm>
+      <connection>scm:git:https://github.com/kunstmusik/CsoundJNI.git</connection>
+      <developerConnection>scm:git:git@github.com:kunstmusik/CsoundJNI.git</developerConnection>
+      <url>https://github.com/kunstmusik/CsoundJNI</url>
+      <!--<tag>1.0.1</tag>-->
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,4 +80,13 @@
       </plugins>
     </pluginManagement>
   </build>
+
+
+  <distributionManagement>
+      <repository>
+          <id>bintray-kunstmusik-CsoundJNI</id>
+          <name>kunstmusik-CsoundJNI</name>
+          <url>https://api.bintray.com/maven/kunstmusik/CsoundJNI/CsoundJNI/;publish=1</url>
+      </repository>
+  </distributionManagement>
 </project>
