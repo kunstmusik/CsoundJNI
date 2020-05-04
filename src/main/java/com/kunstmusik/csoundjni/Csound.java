@@ -148,24 +148,29 @@ public class Csound {
         return csoundGet0dBFS(csoundPtr);
     }
 
-//    public DoubleBuffer getSpin(){
-//        Pointer p = csoundGetSpin(csoundPtr);
-//        int nchnls_i = csoundGetNchnlsInput(csoundPtr);
-//        int ksmps = csoundGetKsmps(csoundPtr);
-//        // 8 since double is 8 bytes in size
-//        ByteBuffer b = p.getByteBuffer(0, nchnls_i * ksmps * 8);
-//        return b.asDoubleBuffer();
-//    }
-//
-//    public DoubleBuffer getSpout(){
-//        Pointer p = csoundGetSpout(csoundPtr);
-//        int nchnls = csoundGetNchnls(csoundPtr);
-//        int ksmps = csoundGetKsmps(csoundPtr);
-//
-//        // 8 since double is 8 bytes in size
-//        ByteBuffer b = p.getByteBuffer(0, nchnls * ksmps * 8);
-//        return b.asDoubleBuffer();
-//    }
+    public DoubleBuffer getSpin() {
+        ByteBuffer buffer = csoundGetSpin(csoundPtr);
+        DoubleBuffer retVal = null; 
+        
+        if(buffer != null) { 
+            buffer.order(ByteOrder.nativeOrder());
+            retVal = buffer.asDoubleBuffer();
+        }
+        return retVal;
+    }
+    
+    public DoubleBuffer getSpout() {
+        ByteBuffer buffer = csoundGetSpout(csoundPtr);
+        DoubleBuffer retVal = null; 
+        
+        if(buffer != null) { 
+            buffer.order(ByteOrder.nativeOrder());
+            retVal = buffer.asDoubleBuffer();
+        }
+        return retVal;
+    }
+    
+
     public void setChannel(String name, double value) {
         csoundSetControlChannel(csoundPtr, name, value);
     }

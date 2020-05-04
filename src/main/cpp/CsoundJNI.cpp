@@ -548,7 +548,21 @@ JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetMessageC
  */
 JNIEXPORT jobject JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSpin
 (JNIEnv *env, jclass clazz, jlong csoundPtr) {
-  return NULL;
+  CSOUND* csound = (CSOUND*)csoundPtr;
+  if(csoundPtr == 0) return NULL;
+  
+  MYFLT* spin = csoundGetSpin(csound);
+  
+  jobject retVal = NULL;
+  
+  if(spin != NULL) {
+    int nchnls_i = csoundGetNchnlsInput(csound);
+    int ksmps = csoundGetKsmps(csound);
+    
+    retVal = env->NewDirectByteBuffer(spin, sizeof(MYFLT) * nchnls_i * ksmps);
+  }
+  
+  return retVal;
 }
 
 /*
@@ -558,7 +572,21 @@ JNIEXPORT jobject JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSpin
  */
 JNIEXPORT jobject JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSpout
 (JNIEnv *env, jclass clazz, jlong csoundPtr) {
-  return NULL;
+  CSOUND* csound = (CSOUND*)csoundPtr;
+  if(csoundPtr == 0) return NULL;
+  
+  MYFLT* spout = csoundGetSpout(csound);
+  
+  jobject retVal = NULL;
+  
+  if(spout != NULL) {
+    int nchnls = csoundGetNchnls(csound);
+    int ksmps = csoundGetKsmps(csound);
+    
+    retVal = env->NewDirectByteBuffer(spout, sizeof(MYFLT) * nchnls * ksmps);
+  }
+  
+  return retVal;
 }
 
 /*
