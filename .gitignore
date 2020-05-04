@@ -1,3 +1,4 @@
 build
+build_xcode
 target
 **/*.class

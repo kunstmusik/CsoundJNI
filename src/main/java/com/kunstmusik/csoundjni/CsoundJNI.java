@@ -24,6 +24,7 @@
 package com.kunstmusik.csoundjni;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -131,4 +132,12 @@ public class CsoundJNI {
   //public void getChannelPtr(Pointer p, String name, int type) {
   //csoundGetChannelPtr(csoundPtr, p, name, type);
   //}
+  
+  /* BYTE BUFFER Related Code that wraps MYFLT* */
+  
+  public static native ByteBuffer csoundGetSpin(long csoundPtr);
+  
+  public static native ByteBuffer csoundGetSpout(long csoundPtr);
+  
+  public static native ByteBuffer csoundGetChannelPtr(long csoundPtr, String name, int type);
 }

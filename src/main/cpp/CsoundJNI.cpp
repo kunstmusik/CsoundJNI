@@ -540,6 +540,59 @@ JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetMessageC
     csoundSetMessageStringCallback(csound, &jniMessageStringCallback);
   }
 
+
+/*
+ * Class:     com_kunstmusik_csoundjni_CsoundJNI
+ * Method:    csoundGetSpin
+ * Signature: (J)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSpin
+(JNIEnv *env, jclass clazz, jlong csoundPtr) {
+  return NULL;
+}
+
+/*
+ * Class:     com_kunstmusik_csoundjni_CsoundJNI
+ * Method:    csoundGetSpout
+ * Signature: (J)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSpout
+(JNIEnv *env, jclass clazz, jlong csoundPtr) {
+  return NULL;
+}
+
+/*
+ * Class:     com_kunstmusik_csoundjni_CsoundJNI
+ * Method:    csoundGetChannelPtr
+ * Signature: (JLjava/lang/String;I)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetChannelPtr
+(JNIEnv *env, jclass clazz, jlong csoundPtr, jstring channel, jint chanType) {
+  CSOUND* csound = (CSOUND*)csoundPtr;
+  if(csoundPtr == 0 || channel == NULL) return NULL;
+
+  const char *chanName = env->GetStringUTFChars(channel, 0);
+  MYFLT* data;
+  
+  int res = csoundGetChannelPtr(csound, &data, chanName, (int)chanType);
+
+  env->ReleaseStringUTFChars(channel, chanName);
+  
+  jobject retVal = NULL;
+  
+  if(res == 0) {
+    if((chanType & CSOUND_CONTROL_CHANNEL) == CSOUND_CONTROL_CHANNEL) {
+      retVal = env->NewDirectByteBuffer(data, sizeof(MYFLT));
+    } else if((chanType & CSOUND_AUDIO_CHANNEL) == CSOUND_AUDIO_CHANNEL) {
+      int ksmps = csoundGetKsmps(csound);
+      retVal = env->NewDirectByteBuffer(data, sizeof(MYFLT) * ksmps);
+    }
+    
+  }
+  
+  return retVal;
+  
+}
 #ifdef __cplusplus
 }
 #endif

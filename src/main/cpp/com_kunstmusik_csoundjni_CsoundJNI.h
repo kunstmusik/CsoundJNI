@@ -239,6 +239,30 @@ JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetStringCh
 JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetMessageCallback
   (JNIEnv *, jclass, jlong, jobject);
 
+/*
+ * Class:     com_kunstmusik_csoundjni_CsoundJNI
+ * Method:    csoundGetSpin
+ * Signature: (J)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSpin
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_kunstmusik_csoundjni_CsoundJNI
+ * Method:    csoundGetSpout
+ * Signature: (J)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSpout
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_kunstmusik_csoundjni_CsoundJNI
+ * Method:    csoundGetChannelPtr
+ * Signature: (JLjava/lang/String;I)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetChannelPtr
+  (JNIEnv *, jclass, jlong, jstring, jint);
+
 #ifdef __cplusplus
 }
 #endif

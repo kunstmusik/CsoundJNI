@@ -23,6 +23,10 @@
 package com.kunstmusik.csoundjni;
 
 import static com.kunstmusik.csoundjni.CsoundJNI.*;
+import static com.kunstmusik.csoundjni.ControlChannelType.*;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.DoubleBuffer;
 
 /**
  *
@@ -175,9 +179,29 @@ public class Csound {
         csoundSetMessageCallback(csoundPtr, msgCallback);
     }
     
+    public DoubleBuffer getControlChannelPtr(String name) {
+        ByteBuffer buffer = csoundGetChannelPtr(csoundPtr, name, 
+                CSOUND_CONTROL_CHANNEL | CSOUND_INPUT_CHANNEL | CSOUND_OUTPUT_CHANNEL);
+        DoubleBuffer retVal = null; 
+        
+        if(buffer != null) { 
+            buffer.order(ByteOrder.nativeOrder());
+            retVal = buffer.asDoubleBuffer();
+        }
+        return retVal;
+    }
     
-    
-//    public void getChannelPtr(Pointer p, String name, int type) {
-//        csoundGetChannelPtr(csoundPtr, p, name, type);
-//    }
+    public DoubleBuffer getAudioChannelPtr(String name) {
+        ByteBuffer buffer = csoundGetChannelPtr(csoundPtr, name, 
+                CSOUND_AUDIO_CHANNEL | CSOUND_INPUT_CHANNEL | CSOUND_OUTPUT_CHANNEL);
+        
+        DoubleBuffer retVal = null; 
+        
+        if(buffer != null) { 
+            buffer.order(ByteOrder.nativeOrder());
+            retVal = buffer.asDoubleBuffer();
+        }
+        
+        return retVal;
+    }
 }
