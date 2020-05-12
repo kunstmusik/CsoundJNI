@@ -61,7 +61,7 @@ public class Csound {
         return csoundSetOption(csoundPtr, option);
     }
 
-    public int evalCode(String s) {
+    public double evalCode(String s) {
         return csoundEvalCode(csoundPtr, s);
     }
 
@@ -121,14 +121,11 @@ public class Csound {
         csoundReset(csoundPtr);
     }
 
-//    public void setMessageCallback(MessageCallback cb) {
-//        csoundSetMessageStringCallback(csoundPtr, cb);
-//    }
-    public int getSr() {
+    public double getSr() {
         return csoundGetSr(csoundPtr);
     }
 
-    public int getKr() {
+    public double getKr() {
         return csoundGetKr(csoundPtr);
     }
 

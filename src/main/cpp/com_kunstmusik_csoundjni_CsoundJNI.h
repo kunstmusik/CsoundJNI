@@ -50,9 +50,9 @@ JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetOption
 /*
  * Class:     com_kunstmusik_csoundjni_CsoundJNI
  * Method:    csoundEvalCode
- * Signature: (JLjava/lang/String;)I
+ * Signature: (JLjava/lang/String;)D
  */
-JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundEvalCode
+JNIEXPORT jdouble JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundEvalCode
   (JNIEnv *, jclass, jlong, jstring);
 
 /*
@@ -170,17 +170,17 @@ JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundReset
 /*
  * Class:     com_kunstmusik_csoundjni_CsoundJNI
  * Method:    csoundGetSr
- * Signature: (J)I
+ * Signature: (J)D
  */
-JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSr
+JNIEXPORT jdouble JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSr
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     com_kunstmusik_csoundjni_CsoundJNI
  * Method:    csoundGetKr
- * Signature: (J)I
+ * Signature: (J)D
  */
-JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetKr
+JNIEXPORT jdouble JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetKr
   (JNIEnv *, jclass, jlong);
 
 /*

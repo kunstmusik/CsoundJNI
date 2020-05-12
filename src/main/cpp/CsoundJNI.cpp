@@ -155,9 +155,9 @@ extern "C"
   /*
    * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundEvalCode
-   * Signature: (JLjava/lang/String;)I
+   * Signature: (JLjava/lang/String;)D
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundEvalCode
+  JNIEXPORT jdouble JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundEvalCode
     (JNIEnv *env, jclass clazz, jlong csoundPtr, jstring code) {
 
       CSOUND* csound = (CSOUND*)csoundPtr;
@@ -165,7 +165,7 @@ extern "C"
 
       const char *nativeString = env->GetStringUTFChars(code, 0);
 
-      jint retVal = csoundEvalCode(csound, nativeString);
+      jdouble retVal = csoundEvalCode(csound, nativeString);
 
       env->ReleaseStringUTFChars(code, nativeString);
 
@@ -404,26 +404,26 @@ extern "C"
   /*
    * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGetSr
-   * Signature: (J)I
+   * Signature: (J)D
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSr
+  JNIEXPORT jdouble JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetSr
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
-      jint retVal = csoundGetSr(csound);
+      jdouble retVal = csoundGetSr(csound);
       return retVal;
     }
 
   /*
    * Class:     com_kunstmusik_csoundjni_CsoundJNI
    * Method:    csoundGetKr
-   * Signature: (J)I
+   * Signature: (J)D
    */
-  JNIEXPORT jint JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetKr
+  JNIEXPORT jdouble JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundGetKr
     (JNIEnv *env, jclass clazz, jlong csoundPtr) {
       CSOUND* csound = (CSOUND*)csoundPtr;
 
-      jint retVal = csoundGetKr(csound);
+      jdouble retVal = csoundGetKr(csound);
       return retVal;
     }
 

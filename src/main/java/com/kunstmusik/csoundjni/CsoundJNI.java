@@ -19,8 +19,7 @@
     License along with CsoundJNI; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     02110-1301 USA
-*/
-
+ */
 package com.kunstmusik.csoundjni;
 
 import java.io.IOException;
@@ -30,114 +29,96 @@ import java.util.logging.Logger;
 
 public class CsoundJNI {
 
-  private static boolean CSOUND_AVAILABLE = false;
-    
-  public static int CSOUNDINIT_NO_SIGNAL_HANDLER = 1;
-  public static int CSOUNDINIT_NO_ATEXIT = 2;
+    private static boolean CSOUND_AVAILABLE = false;
 
-  static {
-    String os = System.getProperty("os.name").toLowerCase();
-    String libraryName = "libcsoundjni.so"; // default case
-    
-    if(os.contains("mac")) {
-        libraryName = "libcsoundjni.jnilib";
-    } else if(os.contains("win")) {
-        libraryName = "csoundjni.dll";
+    public static int CSOUNDINIT_NO_SIGNAL_HANDLER = 1;
+    public static int CSOUNDINIT_NO_ATEXIT = 2;
+
+    static {
+        String os = System.getProperty("os.name").toLowerCase();
+        String libraryName = "libcsoundjni.so"; // default case
+
+        if (os.contains("mac")) {
+            libraryName = "libcsoundjni.jnilib";
+        } else if (os.contains("win")) {
+            libraryName = "csoundjni.dll";
+        }
+
+        try {
+            NativeUtils.loadLibraryFromJar("/com/kunstmusik/csoundjni/native/" + libraryName);
+            //System.loadLibrary("CsoundJNI");
+            CSOUND_AVAILABLE = true;
+        } catch (IOException ex) {
+            Logger.getLogger(CsoundJNI.class.getName()).log(Level.SEVERE, "Error: " + ex.getMessage(), ex);
+            CSOUND_AVAILABLE = false;
+        }
     }
-    
-      try {
-          NativeUtils.loadLibraryFromJar("/com/kunstmusik/csoundjni/native/" + libraryName);
-          //System.loadLibrary("CsoundJNI");
-          CSOUND_AVAILABLE = true;
-      } catch (IOException ex) {
-          Logger.getLogger(CsoundJNI.class.getName()).log(Level.SEVERE, "Error: " + ex.getMessage(), ex);
-          CSOUND_AVAILABLE = false;
-      }
-  }
 
-  public static native int csoundInitialize(int flags);
+    public static native int csoundInitialize(int flags);
 
-  public static native long csoundCreate();
-  public static native void csoundDestroy(long csoundPtr);
-  public static native int csoundGetVersion(); 
-  public static native int csoundSetOption(long csoundPtr, String option);
+    public static native long csoundCreate();
 
-  public static native int csoundEvalCode(long csoundPtr, String s);     
-  public static native int csoundCompile(long csoundPtr, String[] args);
+    public static native void csoundDestroy(long csoundPtr);
 
-  public static native int csoundCompileOrc(long csoundPtr, String s); 
+    public static native int csoundGetVersion();
 
-  public static native int csoundCompileOrcAsync(long csoundPtr, String s); 
+    public static native int csoundSetOption(long csoundPtr, String option);
 
-  public static native int csoundCompileCsdText(long csoundPtr, String csdText);     
+    public static native double csoundEvalCode(long csoundPtr, String s);
 
-  public static native double csoundGetScoreTime(long csoundPtr); 
+    public static native int csoundCompile(long csoundPtr, String[] args);
 
-  public static native void csoundInputMessage(long csoundPtr, String s); 
+    public static native int csoundCompileOrc(long csoundPtr, String s);
 
-  public static native void csoundInputMessageAsync(long csoundPtr, String s); 
-  public static native int csoundReadScore(long csoundPtr, String s); 
-  public static native void csoundReadScoreAsync(long csoundPtr, String s); 
+    public static native int csoundCompileOrcAsync(long csoundPtr, String s);
 
-  public static native int csoundStart(long csoundPtr); 
+    public static native int csoundCompileCsdText(long csoundPtr, String csdText);
 
-  public static native void csoundStop(long csoundPtr);
+    public static native double csoundGetScoreTime(long csoundPtr);
 
-  public static native int csoundPerformKsmps(long csoundPtr); 
-  public static native int csoundCleanup(long csoundPtr); 
+    public static native void csoundInputMessage(long csoundPtr, String s);
 
-  public static native void csoundReset(long csoundPtr); 
+    public static native void csoundInputMessageAsync(long csoundPtr, String s);
 
-  //public void setMessageCallback(MessageCallback cb) {
-  //    csoundSetMessageStringCallback(csoundPtr, cb);
-  //}
+    public static native int csoundReadScore(long csoundPtr, String s);
 
-  public static native int csoundGetSr(long csoundPtr); 
+    public static native void csoundReadScoreAsync(long csoundPtr, String s);
 
-  public static native int csoundGetKr(long csoundPtr);
+    public static native int csoundStart(long csoundPtr);
 
-  public static native int csoundGetKsmps(long csoundPtr);
+    public static native void csoundStop(long csoundPtr);
 
-  public static native int csoundGetNchnls(long csoundPtr);
+    public static native int csoundPerformKsmps(long csoundPtr);
 
-  public static native int csoundGetNchnlsInput(long csoundPtr);
+    public static native int csoundCleanup(long csoundPtr);
 
-  public static native double csoundGet0dBFS(long csoundPtr);
+    public static native void csoundReset(long csoundPtr);
 
-  //public DoubleBuffer getSpin(){
-  //Pointer p = csoundGetSpin(csoundPtr);
-  //int nchnls_i = csoundGetNchnlsInput(csoundPtr);
-  //int ksmps = csoundGetKsmps(csoundPtr);
-  //// 8 since double is 8 bytes in size
-  //ByteBuffer b = p.getByteBuffer(0, nchnls_i * ksmps * 8);
-  //return b.asDoubleBuffer();
-  //}
+    //public void setMessageCallback(MessageCallback cb) {
+    //    csoundSetMessageStringCallback(csoundPtr, cb);
+    //}
+    public static native double csoundGetSr(long csoundPtr);
 
-  //public DoubleBuffer getSpout(){
-  //Pointer p = csoundGetSpout(csoundPtr);
-  //int nchnls = csoundGetNchnls(csoundPtr);
-  //int ksmps = csoundGetKsmps(csoundPtr);
+    public static native double csoundGetKr(long csoundPtr);
 
-  //// 8 since double is 8 bytes in size
-  //ByteBuffer b = p.getByteBuffer(0, nchnls * ksmps * 8);
-  //return b.asDoubleBuffer();
-  //}
+    public static native int csoundGetKsmps(long csoundPtr);
 
-  public static native void csoundSetControlChannel(long csoundPtr, String name, double value);
+    public static native int csoundGetNchnls(long csoundPtr);
 
-  public static native void csoundSetStringChannel(long csoundPtr, String channelName, String channelValue);
+    public static native int csoundGetNchnlsInput(long csoundPtr);
 
-  public static native void csoundSetMessageCallback(long csoundPtr, MessageCallback msgCallback);
-  
-  //public void getChannelPtr(Pointer p, String name, int type) {
-  //csoundGetChannelPtr(csoundPtr, p, name, type);
-  //}
-  
-  /* BYTE BUFFER Related Code that wraps MYFLT* */
-  
-  public static native ByteBuffer csoundGetSpin(long csoundPtr);
-  
-  public static native ByteBuffer csoundGetSpout(long csoundPtr);
-  
-  public static native ByteBuffer csoundGetChannelPtr(long csoundPtr, String name, int type);
+    public static native double csoundGet0dBFS(long csoundPtr);
+
+    public static native void csoundSetControlChannel(long csoundPtr, String name, double value);
+
+    public static native void csoundSetStringChannel(long csoundPtr, String channelName, String channelValue);
+
+    public static native void csoundSetMessageCallback(long csoundPtr, MessageCallback msgCallback);
+
+    /* BYTE BUFFER Related Code that wraps MYFLT* */
+    public static native ByteBuffer csoundGetSpin(long csoundPtr);
+
+    public static native ByteBuffer csoundGetSpout(long csoundPtr);
+
+    public static native ByteBuffer csoundGetChannelPtr(long csoundPtr, String name, int type);
 }
