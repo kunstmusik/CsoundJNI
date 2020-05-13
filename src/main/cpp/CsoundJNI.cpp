@@ -50,6 +50,8 @@ void jniMessageStringCallback(CSOUND * csound, int attr, const char * msg) {
   if(hostData == NULL) return;
   jobject msgcallback = hostData->msgCallback;
   
+  if(msgcallback == NULL) return;
+  
   JNIEnv *env;
   // double check it's all ok
   int getEnvStat = g_VM->GetEnv((void **)&env, JNI_VERSION_1_6);
@@ -528,16 +530,27 @@ JNIEXPORT void JNICALL Java_com_kunstmusik_csoundjni_CsoundJNI_csoundSetMessageC
     
     HostData* data = (HostData*)csoundGetHostData(csound);
     
-    data->msgCallback = env->NewGlobalRef(jobj);
-    
-    jclass cls = env->GetObjectClass(jobj);
-    
+    if(jobj == NULL) {
+      if(data->msgCallback != NULL) {
+        env->DeleteGlobalRef(data->msgCallback);
+      }
+      
+      data->msgCallback = NULL;
+      data->callbackMethodId = NULL;
+      csoundSetMessageStringCallback(csound, NULL);
 
-    data->callbackMethodId = env->GetMethodID(cls,
-                                              "callback",
-                                              "(ILjava/lang/String;)V");
+    } else {
+      data->msgCallback = env->NewGlobalRef(jobj);
+      jclass cls = env->GetObjectClass(jobj);
+
+      data->callbackMethodId = env->GetMethodID(cls,
+                                                "callback",
+                                                "(ILjava/lang/String;)V");
+      csoundSetMessageStringCallback(csound, &jniMessageStringCallback);
+
+    }
+    
         
-    csoundSetMessageStringCallback(csound, &jniMessageStringCallback);
   }
 
 

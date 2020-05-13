@@ -177,8 +177,8 @@ public class Csound {
     }
 
     public void setMessageCallback(MessageCallback msgCallback) {
-        this.messageCallback = msgCallback;
         csoundSetMessageCallback(csoundPtr, msgCallback);
+        this.messageCallback = msgCallback;
     }
     
     public DoubleBuffer getControlChannelPtr(String name) {
