@@ -6,7 +6,7 @@
 
   <groupId>com.kunstmusik</groupId>
   <artifactId>CsoundJNI</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 
   <name>CsoundJNI</name>
   <url>http://github.com/kunstmusik/csoundjni</url>
@@ -77,10 +77,26 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
 
+      </plugins>
+
+    </pluginManagement>
+    <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+    </plugins>
+  </build>
 
   <distributionManagement>
       <repository>
