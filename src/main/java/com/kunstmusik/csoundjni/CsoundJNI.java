@@ -27,6 +27,16 @@ import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/** 
+ * Class that wraps Csound C API native functions and exposes them as static methods. 
+ * Usage of this class will largely be done by wrapping classes like Csound class, 
+ * with the exception of csoundInitialize which should be called by all Java 
+ * systems with CSOUNDINIT_NO_SIGNAL_HANDLER | CSOUNDINIT_NO_ATEXIT to turn 
+ * off handlers which can interfere with the JVM. 
+ * 
+ * @author Steven Yi
+ */
 public class CsoundJNI {
 
     private static boolean CSOUND_AVAILABLE = false;

@@ -23,8 +23,14 @@
 package com.kunstmusik.csoundjni;
 
 /**
- *
- * @author syyigmmbp
+ * Signal Abstract Method interface for message callbacks to be used with 
+ * Csound class. 
+ * 
+ * <pre>
+ * csound.setMessageCallback((attr, msg) -> System.out.println(msg));
+ * </pre>
+ * 
+ * @author Steven Yi
  */
 public interface MessageCallback {
     public void callback(int attr, String msg);
