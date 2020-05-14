@@ -6,7 +6,7 @@
 
   <groupId>com.kunstmusik</groupId>
   <artifactId>CsoundJNI</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3-SNAPSHOT</version>
 
   <name>CsoundJNI</name>
   <url>http://github.com/kunstmusik/csoundjni</url>
