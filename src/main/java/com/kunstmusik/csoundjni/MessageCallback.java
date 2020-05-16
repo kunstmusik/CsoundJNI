@@ -27,7 +27,7 @@ package com.kunstmusik.csoundjni;
  * Csound class. 
  * 
  * <pre>
- * csound.setMessageCallback((attr, msg) -> System.out.println(msg));
+ * csound.setMessageCallback((attr, msg) -&gt; System.out.println(msg));
  * </pre>
  * 
  * @author Steven Yi
