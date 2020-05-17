@@ -155,16 +155,6 @@
     </plugins>
   </build>
 
-  <!--    <distributionManagement>
-    <repository>
-    <id>bintray-kunstmusik-CsoundJNI</id>
-    <name>kunstmusik-CsoundJNI</name>
-    <url>
-    https://api.bintray.com/maven/kunstmusik/CsoundJNI/CsoundJNI/;publish=1
-    </url>
-    </repository>
-  </distributionManagement>-->
-
   <distributionManagement>
     <snapshotRepository>
       <id>ossrh</id>
