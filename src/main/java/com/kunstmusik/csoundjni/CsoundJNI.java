@@ -22,19 +22,19 @@
  */
 package com.kunstmusik.csoundjni;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-/** 
- * Class that wraps Csound C API native functions and exposes them as static methods. 
- * Usage of this class will largely be done by wrapping classes like Csound class, 
- * with the exception of csoundInitialize which should be called by all Java 
- * systems with CSOUNDINIT_NO_SIGNAL_HANDLER | CSOUNDINIT_NO_ATEXIT to turn 
- * off handlers which can interfere with the JVM. 
- * 
+/**
+ * Class that wraps Csound C API native functions and exposes them as static
+ * methods. Usage of this class will largely be done by wrapping classes like
+ * Csound class, with the exception of csoundInitialize which should be called
+ * by all Java systems with CSOUNDINIT_NO_SIGNAL_HANDLER | CSOUNDINIT_NO_ATEXIT
+ * to turn off handlers which can interfere with the JVM.
+ *
  * @author Steven Yi
  */
 public class CsoundJNI {
@@ -49,6 +49,22 @@ public class CsoundJNI {
         String libraryName = "libcsoundjni.so"; // default case
 
         if (os.contains("mac")) {
+            final String libPath = "Frameworks/CsoundLib64.framework/CsoundLib64";
+
+            // Use default rpath if it exists
+            final String systemLib = "/Library" + libPath;
+
+            if (!new File(systemLib).exists() || !new File(systemLib).isFile()) {
+                // Otherwise, see if user has self-built csound and installed into ~/Library/Frameworks
+                final String homeLib = System.getProperty(("user.home"))
+                        + "/Library/" + libPath;
+
+                if (new File(homeLib).exists() && new File(homeLib).isFile()) {
+                    System.out.println("Loading " + homeLib);
+                    System.load(homeLib);
+                } 
+            }
+
             libraryName = "libcsoundjni.jnilib";
         } else if (os.contains("win")) {
             libraryName = "csoundjni.dll";
