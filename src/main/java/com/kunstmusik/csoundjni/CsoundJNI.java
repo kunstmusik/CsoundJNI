@@ -45,7 +45,8 @@ public class CsoundJNI {
     public static int CSOUNDINIT_NO_ATEXIT = 2;
 
     static {
-        String os = System.getProperty("os.name").toLowerCase();
+        final String os = System.getProperty("os.name").toLowerCase();
+        final String arch = System.getProperty("os.arch").toLowerCase();
         String libraryName = "libcsoundjni.so"; // default case
 
         if (os.contains("mac")) {
@@ -70,8 +71,12 @@ public class CsoundJNI {
             libraryName = "csoundjni.dll";
         }
 
+        final String base = ("aarch64".equals(arch)) ? 
+            "/com/kunstmusik/csoundjni/native/aarch64/" :
+            "/com/kunstmusik/csoundjni/native/";
+
         try {
-            NativeUtils.loadLibraryFromJar("/com/kunstmusik/csoundjni/native/" + libraryName);
+            NativeUtils.loadLibraryFromJar(base + libraryName);
             //System.loadLibrary("CsoundJNI");
             CSOUND_AVAILABLE = true;
         } catch (IOException ex) {

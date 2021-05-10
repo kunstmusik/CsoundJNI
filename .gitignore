@@ -2,3 +2,8 @@ build
 build_xcode
 target
 **/*.class
+.settings
+.vscode/settings.json
+.project
+.classpath
+src/main/resources/com/kunstmusik/csoundjni/.DS_Store

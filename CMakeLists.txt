@@ -5,6 +5,8 @@ set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.14)
 set(NATIVE_INSTALL_PATH "${CMAKE_SOURCE_DIR}/src/main/resources/com/kunstmusik/csoundjni/native")
 
 find_package(Java 11 REQUIRED COMPONENTS Development)
