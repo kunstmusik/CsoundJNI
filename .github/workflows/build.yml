@@ -1,8 +1,6 @@
 name: Csound JNI Build 
 
-# on: [push]
-
-on: workflow_call
+on: [push]
 
 jobs:
   build:
