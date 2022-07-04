@@ -296,6 +296,26 @@ public class Csound {
         return csoundPerformKsmps(csoundPtr);
     }
 
+     /**
+     * Senses input events and performs audio output until the end of score
+     * is reached (positive return value), an error occurs (negative return
+     * value), or performance is stopped by calling csoundStop() from another
+     * thread (zero return value).
+     * Note that csoundCompile() or csoundCompileOrc(), csoundReadScore(),
+     * csoundStart() must be called first.
+     * In the case of zero return value, csoundPerform() can be called again
+     * to continue the stopped performance. Otherwise, csoundReset() should be
+     * called to clean up after the finished or failed performance.
+     */
+    public int perform() {
+        int res;
+        do {
+            res = performKsmps();
+        } while(res == 0);
+        
+        return res;
+    }
+
     /**
      * Prints information about the end of a performance, and closes audio and
      * MIDI devices.Note: after calling cleanup(), the operation of the perform
